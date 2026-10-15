@@ -1,0 +1,23 @@
+# Point tracking — application settings.
+# Edited by the teacher only. Students do not change this file.
+# The values used for a run are copied into each project's project.json.
+
+[processing]
+crf = 18                    # H.264 quality: lower = better quality and bigger file (0 = lossless, 23 = ffmpeg default)
+default_target_fps = 5      # value proposed in the "Process" step
+
+[roi]
+default_width = 50          # px, size of a new box
+default_height = 50         # px
+min_size = 8                # px, smallest allowed width/height
+min_texture = 8.0           # grey-level standard deviation below which a box gets a "plain area" warning
+
+[tracker]
+method = "zncc"
+search_margin = 1.0         # search window = box ± margin × box size on each side (old code: scaling_ZR = 1)
+subpixel = true
+refresh_threshold = 0.8     # the reference template is refreshed when the score drops below this
+lost_threshold = 0.5        # below this score a box counts as lost in that frame
+
+[preview]
+update_every_n_frames = 5   # live preview refresh rate during tracking

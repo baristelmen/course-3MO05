@@ -161,3 +161,6 @@ cython_debug/
 
 processor/
 config.yaml
+
+# Files
+./point_tracking/plan.md

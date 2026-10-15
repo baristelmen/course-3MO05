@@ -1,0 +1,35 @@
+# Installs the point_tracking environment exactly like the students do and runs the tests on every OS.
+name: point_tracking
+
+on:
+  push:
+    paths: ["point_tracking/**", ".github/workflows/point_tracking.yml"]
+  pull_request:
+    paths: ["point_tracking/**", ".github/workflows/point_tracking.yml"]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        # macos-latest = Apple Silicon. Add an Intel macOS runner label here if GitHub still provides one.
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -el {0}   # login shell so the conda environment is active
+    steps:
+      - uses: actions/checkout@v4
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          environment-file: point_tracking/environment.yml
+          activate-environment: tp-meca
+      - name: Install system libraries needed by Qt (Linux only)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libegl1 libgl1 libxkbcommon0 libfontconfig1 libdbus-1-3
+      - name: Install test tools
+        run: pip install -r point_tracking/requirements-dev.txt
+      - name: Run tests
+        working-directory: point_tracking
+        run: python -m pytest -v

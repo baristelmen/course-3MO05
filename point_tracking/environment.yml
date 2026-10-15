@@ -1,0 +1,12 @@
+# Conda environment for the point tracking application.
+# conda only provides Python (from conda-forge); every library is installed by pip from requirements.txt.
+#   conda env create -f point_tracking/environment.yml
+name: tp-meca
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - -r requirements.txt

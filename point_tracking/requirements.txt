@@ -1,0 +1,7 @@
+# Libraries for the point tracking application.
+# Names and minimum versions only (no build strings) so the same file works on Windows, macOS and Linux.
+numpy>=1.26
+opencv-python-headless>=4.9
+imageio-ffmpeg>=0.5
+PySide6>=6.6
+matplotlib>=3.8
