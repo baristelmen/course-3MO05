@@ -6,7 +6,7 @@ clear message instead of a confusing error later.
 
 import sys
 
-__version__ = "0.1.0"
+__version__ = "2.0.0"
 MINIMUM_PYTHON = (3, 11)
 
 

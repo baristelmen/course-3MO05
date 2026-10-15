@@ -4,7 +4,7 @@ Project-based point tracking (a simplified DIC) for tensile-test videos.
 **Before your first analysis, read the student guide: [docs/how_tracking_works.md](docs/how_tracking_works.md)**
 (how tracking works, assumptions, default settings, practical advice).
 
-The full specification and development route are in [plan.md](plan.md). **Status: phases 0–10 done (full workflow, sub-pixel tracking).**
+**Version 2.0.0** — see [RELEASE_NOTES.md](RELEASE_NOTES.md).
 
 ## Installation (Windows, macOS, Linux)
 
@@ -17,6 +17,13 @@ conda activate tp-meca
 
 This creates the `tp-meca` environment with Python 3.12 from conda-forge and installs every library with pip
 from `requirements.txt`.
+
+## Starting the application
+
+```bash
+conda activate tp-meca
+python point_tracking/app.py
+```
 
 ## Checking the installation
 
@@ -34,4 +41,6 @@ python -m pytest
 | `settings.toml` | Tuning parameters (teacher only) |
 | `docs/` | Student guide (`how_tracking_works.md`) |
 | `tests/` | Automatic tests |
-| `legacy/` | Original scripts, kept for verification (`compare.py` runs old and new tracking side by side) |
+
+The original scripts (before version 2.0.0) are no longer in this folder. They are kept in the git history
+at the tag `legacy-code-transition` (`git switch --detach legacy-code-transition` to look at them).

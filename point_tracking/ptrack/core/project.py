@@ -198,7 +198,7 @@ def import_video(root, data, source_path, progress=None):
 
     If the project already has a video, it is replaced (the GUI warns the user before calling this).
     `progress`, if given, is called as progress(frames_done, frames_expected) while reading the video.
-    Limitation (plan.md §14, L1): the copy has no progress callback, so it cannot be cancelled midway.
+    Limitation (docs/how_tracking_works.md §10): the copy has no progress callback, so it cannot be cancelled midway.
     """
     root = Path(root)
     source_path = Path(source_path)

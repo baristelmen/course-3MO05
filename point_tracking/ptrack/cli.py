@@ -89,15 +89,10 @@ def command_track(args):
         print(f"\rTracking frame {done}", end="", flush=True)
 
     start = time.perf_counter()
-    if args.refresh_every is not None:
-        # original-code mode: whole pixels, template refreshed every N frames
-        mode = f"whole pixels, refresh every {args.refresh_every} frames"
-        result = track_boxes(args.video, args.box, margin, refresh_every=args.refresh_every, progress=show_progress)
-    else:
-        mode = f"sub-pixel {tracker['subpixel']}, refresh when score < {tracker['refresh_threshold']}"
-        result = track_boxes(args.video, args.box, margin, subpixel=tracker["subpixel"],
-                             refresh_threshold=tracker["refresh_threshold"],
-                             lost_threshold=tracker["lost_threshold"], progress=show_progress)
+    mode = f"sub-pixel {tracker['subpixel']}, refresh when score < {tracker['refresh_threshold']}"
+    result = track_boxes(args.video, args.box, margin, subpixel=tracker["subpixel"],
+                         refresh_threshold=tracker["refresh_threshold"],
+                         lost_threshold=tracker["lost_threshold"], progress=show_progress)
     elapsed = time.perf_counter() - start
     print()
 
@@ -262,9 +257,6 @@ def main():
     track_parser.add_argument("video", help="path to the video")
     track_parser.add_argument("--box", type=parse_box, action="append", required=True,
                               help="box on frame 0 as x,y,w,h (top-left corner, width, height); repeat for each box")
-    track_parser.add_argument("--refresh-every", type=int, default=None,
-                              help="original-code mode: whole pixels, templates refreshed every N frames (50 in the "
-                                   "original code). Default: settings.toml (sub-pixel, refresh on low score)")
     track_parser.set_defaults(function=command_track)
 
     run_parser = subparsers.add_parser("run", help="process + track + write results (no project)")

@@ -46,7 +46,7 @@ def format_info(video, key):
 class ImportPage(QWidget):
     """Choose a video file; it is copied to raw/input.<ext> and scanned in a background thread.
 
-    Known limitation (plan.md §14, L1): Cancel cannot interrupt the file copy itself; it takes
+    Known limitation (docs/how_tracking_works.md §10): Cancel cannot interrupt the file copy itself; it takes
     effect when the copy is finished and the video is being read.
     """
 

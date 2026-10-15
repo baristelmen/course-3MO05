@@ -13,7 +13,7 @@ Sub-pixel (`subpixel=True`): the best match is a whole pixel; a parabola is fitt
 score of that pixel and its two neighbours, separately in x and in y. The top of each parabola
 gives the position to a fraction of a pixel (typically better than 0.1 px).
 
-Template refresh (see plan.md §8.3.1): the template can be replaced by the image of the box in
+Template refresh (explained in docs/how_tracking_works.md §4.4): the template can be replaced by the image of the box in
 the current frame, cut at its (sub-pixel) tracked position:
 - `refresh_threshold`: when the score of a box drops below this value (but stays above
   `lost_threshold`, otherwise the image is probably not the mark any more);
