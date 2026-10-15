@@ -163,4 +163,4 @@ processor/
 config.yaml
 
 # Files
-./point_tracking/plan.md
+point_tracking/plan.md
