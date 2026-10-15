@@ -55,7 +55,7 @@ def test_tracking_with_template_refresh(tmp_path):
     shifts = [(k, 2 * k) for k in range(8)]
     video = tmp_path / "shifted.mp4"
     write_shifted_video(video, shifts)
-    result = track_boxes(video, [Box(100, 60, 40, 40)], search_margin=1.0, refresh_every=3)
+    result = track_boxes(video, [Box(100, 60, 40, 40)], search_margin=1.0)
     assert [tuple(p) for p in result.top_left[:, 0]] == [(100 + dx, 60 + dy) for dx, dy in shifts]
 
 

@@ -17,7 +17,6 @@ Template refresh (see plan.md §8.3.1): the template can be replaced by the imag
 the current frame, cut at its (sub-pixel) tracked position:
 - `refresh_threshold`: when the score of a box drops below this value (but stays above
   `lost_threshold`, otherwise the image is probably not the mark any more);
-- `refresh_every`: every N frames (behaviour of the original code, kept for legacy/compare.py).
 
 Plain template: if the image inside a box has no variation at all (completely uniform or
 overexposed), ZNCC is undefined (OpenCV then returns 1 everywhere and the box would slide to the
@@ -111,14 +110,13 @@ def cut_template(gray, x, y, w, h):
 
 
 def track_boxes(video_path, boxes, search_margin, subpixel=False, refresh_threshold=None, lost_threshold=0.0,
-                refresh_every=None, progress=None, on_frame=None):
+                progress=None, on_frame=None):
     """Track `boxes` (list of `Box`, defined on frame 0) through every frame of the video.
 
     `search_margin`: search window size, see `search_window`.
     `subpixel`: refine every match to a fraction of a pixel (see `subpixel_offset`).
     `refresh_threshold`, `lost_threshold`: refresh a box's template when
         lost_threshold <= score < refresh_threshold (None = never refresh on score).
-    `refresh_every`: if given, refresh all templates every this many frames (original code; None = never).
     `progress`, if given, is called as progress(frames_done) after each frame.
     `on_frame`, if given, is called as on_frame(frame_index, frame, top_left, scores) after each
     frame (used for the live preview); `top_left` is (n_boxes, 2), `scores` is (n_boxes,).
@@ -164,8 +162,6 @@ def track_boxes(video_path, boxes, search_margin, subpixel=False, refresh_thresh
 
                 refresh = False
                 if refresh_threshold is not None and lost_threshold <= best_score < refresh_threshold:
-                    refresh = True
-                if refresh_every is not None and frame_index % refresh_every == 0:
                     refresh = True
                 if refresh:
                     templates[i] = cut_template(gray, frame_positions[i, 0], frame_positions[i, 1], box.w, box.h)

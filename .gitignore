@@ -164,3 +164,9 @@ config.yaml
 
 # Files
 point_tracking/plan.md
+
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
