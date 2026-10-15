@@ -1,197 +1,198 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
 
-  <h3 align="center">Tensile test practical work (TP)</h3>
+  <h3 align="center">Méthodes expérimentales pour la mécanique – Tensile test practical work</h3>
 
   <p align="center">
-    Python scripts for controlling the machine and post-treatment of video data
+    Controlling a tensile testing machine and measuring strain from a video with Python. <br />
     <br />
-    <a href="https://github.com/baristelmen/TP-Traction-2023/archive/refs/heads/main.zip">Download</a>
+    <a href="https://github.com/baristelmen/MO105/issues">Report Bug</a>
     ·
-    <a href="https://github.com/baristelmen/TP-Traction-2023/tree/main/examples">View Demo</a>
-    ·
-    <a href="https://github.com/baristelmen/TP-Traction-2023/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/baristelmen/TP-Traction-2023/issues">Request Feature</a>
+    <a href="https://github.com/baristelmen/MO105/pulls">Request Feature</a>
   </p>
 </div>
 
+<div align="center">
+<table>
+  <tr>
+    <th align="left">Course</th>
+    <td>MEC_3MO05_TA – Méthodes expérimentales pour la mécanique</td>
+  </tr>
+  <tr>
+    <th align="left">Level</th>
+    <td>Diplôme d'Ingénieur, 1st year (1A)</td>
+  </tr>
+  <tr>
+    <th align="left">Institution</th>
+    <td>ENSTA Paris – Institut Polytechnique de Paris</td>
+  </tr>
+  <tr>
+    <th align="left">Course responsible</th>
+    <td>Corinne Rouby</td>
+  </tr>
+  <tr>
+    <th align="left">Repository maintainer</th>
+    <td><a href="https://github.com/baristelmen">Baris Telmen</a></td>
+  </tr>
+</table>
+</div>
+
+## Table of Contents
+
+- [About this repository](#about-this-repository)
+- [Getting started](#getting-started)
+  - [Requirements](#requirements)
+  - [About the data in this repository](#about-the-data-in-this-repository)
+  - [Get the repository](#get-the-repository)
+  - [Option A: Conda environment file (recommended)](#option-a-conda-environment-file-recommended)
+  - [Option B: Manual installation](#option-b-manual-installation)
+  - [Run the programs](#run-the-programs)
+- [Getting help](#getting-help)
+- [Contributing](#contributing)
+- [License](#license)
+
+## About this repository
+
+This repository contains the Python programs used during the tensile test practical work of the
+**MEC_3MO05_TA** course. The tensile machine of the course measures the force, but **not the displacement**:
+the test is filmed (a phone is enough) and the strain is measured afterwards from the video.
+
+- **`point_tracking/`** – a desktop application that follows marks on the specimen in the video and computes
+  the strain between them (a simplified DIC). Read the [student guide](point_tracking/docs/how_tracking_works.md)
+  before your first analysis.
+- **`control_machine/`** – the graphical interface that drives the tensile machine and records the force
+  (used on the lab computer connected to the machine).
+- **`examples/`** – sample data: a test video, a tracking result and force recordings, with short analysis scripts.
+
+Synchronising the force data with the video results is part of the practical work and is done by the students.
+
+## Getting started
+
+### Requirements
+
+- [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (Windows, macOS or Linux). On Windows, use the
+  **Anaconda Prompt** (or *Miniconda Prompt*) installed with it to type the commands below.
+- About 2 GB of free disk space and a network connection for the first installation.
+- For your own analysis: the video of your test, recorded with a camera or a phone on a tripod.
+
+The libraries are published for Windows, macOS (Intel and Apple Silicon) and Linux, so the same commands work everywhere.
+
+### About the data in this repository
+
+> [!IMPORTANT]
+> **The data in `examples/` is sample data only.** It shows the expected file formats and lets you try the
+> programs, but it is **not** the data you will analyse.
+>
+> During the practical work you produce your own data:
+>
+> 1. **The force recording** from `control_machine` (a text file with time and load).
+> 2. **The video of your test**, imported into a new project of the `point_tracking` application.
+>
+> Create one `point_tracking` project per tested specimen, in a folder of your choice.
+
+### Get the repository
+
+```shell
+git clone https://github.com/baristelmen/MO105.git
+cd MO105
+```
+
+Or [download the ZIP](https://github.com/baristelmen/MO105/archive/refs/heads/main.zip), unzip it, and open a
+terminal (Anaconda Prompt on Windows) in the `MO105` folder.
+
+Both options below create a conda environment called **`tp-meca`** with Python 3.12 from conda-forge. Every
+library is then installed with pip from `point_tracking/requirements.txt`.
+
+### Option A: Conda environment file (recommended)
+
+**Create the environment** (once):
+
+```shell
+conda env create -f point_tracking/environment.yml
+```
+
+**Activate it** (every time you open a new terminal):
+
+```shell
+conda activate tp-meca
+```
 
+To update the environment after pulling a new version of the repository:
 
-# About this repository
-This repo contains python scripts to assist you through your practical course. Currently, two main scripts are available.
+```shell
+conda env update -f point_tracking/environment.yml --prune
+```
 
-| Name            | Definition                                                                                                                                                                                   |
-|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| control_machine | This script will be used to control machine's cross-head displacement during tensile testing. It's a graphical user interface to control the machine using an Arduino based micro-controller |
-| point_tracking  | This script can be used for post-treatment of recorded video during the tensile testing to obtain deformation on given points.                                                               |
+To remove it:
 
-As it's current state, it has been tested under Windows and Linux. **On MacOS, the GUI known to be buggy.**
+```shell
+conda env remove -n tp-meca
+```
 
----
-<!-- GETTING STARTED -->
-# Getting Started
+### Option B: Manual installation
 
-The scripts for controlling the machine and post-treatment of video files requires a valid python installation and availability of python libraries. To facilitate the installation process and unifying the functionality, it's recommended to use **conda**.
+Use this if Option A fails, or to install into an environment you manage yourself:
 
-Conda is an open source package management system and environment management system that runs on Windows, macOS, and Linux. Conda quickly installs, runs and updates packages and their dependencies. If you need a package that requires a different version of Python, you do not need to switch to a different environment manager, because conda is also an environment manager.
+```shell
+conda create -n tp-meca -c conda-forge --override-channels python=3.12 pip
+conda activate tp-meca
+pip install -r point_tracking/requirements.txt
+```
 
-Conda is widely used in the scientific computing and data science communities due to its extensive package availability, environment management capabilities, and robust dependency resolution. It simplifies the process of setting up and managing software environments, making it easier to work on Python projects with different dependencies and configurations.
+The application needs **Python 3.11 or newer**. With an older Python it stops with a message explaining what to do.
 
-Anaconda contains huge pack of default libraries which we don't require at the moment. Therefore, we will install **miniconda** instead. Miniconda is a lightweight installer for Conda that includes only the essential components needed to run Conda. It provides a smaller footprint compared to the full Anaconda distribution, making it faster to download and install. Miniconda allows you to create and manage Python environments and install packages using the Conda package manager.
+> [!CAUTION]
+> **`conda: command not found` or `'conda' is not recognized`?** The terminal does not know conda.
+> On Windows, open the **Anaconda Prompt** from the Start menu instead of the normal terminal.
+> On macOS/Linux, run `conda init` once, then close and reopen the terminal.
 
-With Miniconda, you have the flexibility to set up custom Python environments tailored to your specific project requirements. You can create isolated environments with different versions of Python and install packages using Conda or pip, depending on your preference.
+### Run the programs
 
-Miniconda provides the core functionality of Conda, including package management, dependency resolution, and environment management. It's a popular choice for those who prefer a lightweight installation and want more control over the packages and dependencies in their Python environments.
+With the `tp-meca` environment activated, from the `MO105` folder:
 
----
+| Program | Command |
+| --- | --- |
+| Point tracking (video → strain) | `python point_tracking/app.py` |
+| Machine control (lab computer only) | `python control_machine/interface.py` – needs `pip install pyserial` and the machine connected |
 
-# Prerequisites
+To check the point tracking installation, run its tests:
 
-**Before going any further, please follow the instructions below to install and configure your environment**
+```shell
+cd point_tracking
+pip install -r requirements-dev.txt
+python -m pytest
+```
 
-To obtain miniconda, follow the instructions below;
+## Getting help
 
-1. Visit the Miniconda website at [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html).
-2. Download the installer appropriate for your operating system.
-3. Run the installer and follow the prompts to complete the installation.
+- **Problems with this repository or the programs:** open an issue on the [Issues page](https://github.com/baristelmen/MO105/issues).
+  Include the steps to reproduce, the error message, and your OS and Python version (`python --version`).
+- **How the tracking works, settings, good practice:** see the [student guide](point_tracking/docs/how_tracking_works.md)
+  and the [point tracking README](point_tracking/README.md).
+- **Conda:** see the [conda user guide](https://docs.conda.io/projects/conda/en/stable/user-guide/index.html).
+- **OpenCV:** see the [OpenCV documentation](https://docs.opencv.org/).
 
-### For Windows 10/11
-It's recommended to use `Anaconda Powershell Prompt` or `Anaconda Prompt` to access `conda` functions. By default, if it's not added on the PATH, the system can't recognize the where to find `conda`. 
+## Contributing
 
-To verify the installation is passed correctly, open `Anaconda Powershell Prompt` or `Anaconda Prompt` run the following command:
+Contributions are welcome! If you find an issue or have an improvement to suggest, feel free to open an issue or submit a pull request.
 
-`conda --version`
+## License
 
-If the installation was successful, you should see the version of Conda installed on your system. 
+The content of this repository (programs, course material, and documentation) is open source under the
+[GNU General Public License v3.0](LICENSE). Anyone is free to use, modify, and share it under the same license.
 
-Inside the repository, there is a file which is called `traction.yaml`. This file contains all the necessary libraries that is required to run scripts for both `control_machine` and `point_tracking`. Therefore, access `Anaconda Powershell Prompt` or `Anaconda Prompt` and type the following code for automatic installation of packages.
+The environment installs third-party software that remains under its own license:
 
-`conda env create --name traction-tp --file environment.yml`
+| Software | License |
+| --- | --- |
+| [Python](https://www.python.org/) | PSF License |
+| [Conda](https://github.com/conda/conda) / [conda-forge](https://conda-forge.org/) packages | BSD-3-Clause (conda); each package keeps its own license |
+| [OpenCV](https://opencv.org/) (`opencv-python-headless`) | Apache-2.0 |
+| [NumPy](https://numpy.org/) | BSD-3-Clause |
+| [Matplotlib](https://matplotlib.org/) | Matplotlib License (PSF-based) |
+| [PySide6 / Qt](https://www.qt.io/qt-for-python) | LGPL-3.0 |
+| [imageio-ffmpeg](https://github.com/imageio/imageio-ffmpeg) | BSD-2-Clause; the bundled [FFmpeg](https://ffmpeg.org/) binary is GPL-3.0 (includes x264) |
+| [pySerial](https://github.com/pyserial/pyserial) (machine control) | BSD-3-Clause |
 
-By default, this file will create an environment which is called `traction-tp`. To run these scripts, these environment has to be activated. To do that, access `Anaconda Powershell Prompt` or `Anaconda Prompt` and type the following 
-
-`conda activate traction-tp`
-
-In case if you encounter any error, follow the `Manual installation instructions`
-
-### For Linux (Ubuntu, Arch, Fedora, Centos etc.)
-Once the miniconda is installed, if it's added to the path, it's automatically activated. Therefore, open a terminal and verify the accessibility and installation using;
-
-`conda --version`
-
-If the installation was successful, you should see the version of Conda installed on your system. 
-
-Inside the repository, there is a file which is called `traction.yaml`. This file contains all the necessary libraries that is required to run scripts for both `control_machine` and `point_tracking`. Therefore, access `Anaconda Powershell Prompt` or `Anaconda Prompt` and type the following code for automatic installation of packages.
-
-`conda env create --name traction --file environment.yml`
-
-By default, this file will create an environment which is called `traction-tp`. To run these scripts, these environment has to be activated. To do that, access `Anaconda Powershell Prompt` or `Anaconda Prompt` and type the following 
-
-`conda activate traction-tp`
-
-In case if you encounter any error, follow the `Manual installation instructions`
-
-### For MacOS (Including Intel and ARM based chips)
-
-For MacOS, Once the miniconda is installed, if it's added to the path, it's automatically activated. Therefore, open a terminal and verify the accessibility and installation using;
-
-`conda --version`
-
-If the installation was successful, you should see the version of Conda installed on your system. Unfortunately, the automatic installation through `traction.yaml` file is known to be not working. Therefore, follow the manual installation below.
-
-### Manual installation instructions
-
-At some point, some configurations might require elevated prompt or some other interventions. Therefore, it's necessary to install everything from scratch manually. For each system (Windows, Linux or MacOS), open the terminal which has an access to `conda` and type the following;
-
-* conda create -n traction-tp
-* conda activate traction-tp
-* conda install -c conda-forge pyserial opencv matplotlib pandas numpy scipy
-
-These packages should be sufficient to run the programs. 
-
----
-<!-- USAGE EXAMPLES -->
-# Usage
-To use the programs, inside the activated environment of conda type the following:
-
-| Name            | Definition                                                                                                                                                                                   |
-|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| control_machine | python combine_frames.py |
-| point_tracking  | python Tracking_Video_ZNCC.py                                                               |
-
----
-
-
-
-## Quick introduction to tensile testing
-Tensile Testing is a form of tension testing and is a destructive engineering and materials science test whereby controlled tension is applied to a sample until it fully fails. It is widely used for material characterization and quality control in various industries, including engineering, manufacturing, and materials science.
-
-A test sample is loaded in tension when it experiences opposing forces acting upon opposite faces both located on the same axis that attempt to pull the specimen apart. The test involves applying an axial force or axial displacement to a specimen while measuring its response in terms of;
-
-* Force
-* Displacement
-* Strain (if an extensometer is used)
-
-The setup for a tensile test consists of a specialized machine called a universal testing machine (UTM) or a tensile testing machine. This machine consists of a load frame, grips to hold the specimen, and a load cell or load sensor to measure the applied force. The grips securely hold the specimen, ensuring that it doesn't slip during the test.
-
-To perform a tensile test, a sample of the material is prepared in a specific geometry, typically in the form of a standardized dog-bone shape or a cylindrical shape with a reduced section called a "neck." The specimen is then placed in the grips of the tensile testing machine. The machine applies a gradually increasing force, which stretches the specimen until it eventually fractures.
-
-During the test, the tensile testing machine provides several important outputs. These include:
-
-1. Load: The applied force acting on the specimen, measured in Newtons (N) or pounds-force (lbf). The load is typically recorded continuously throughout the test.
-
-2. Displacement: The applied movement or movement acting on sample based on applied force is recorded continuously throughout the test. Generally, expressed in mm (for metals etc.). 
-
-3. Stress: The stress is calculated by dividing the applied force by the original cross-sectional area of the specimen. Stress is usually measured in units of Pascals (Pa) or pounds per square inch (psi).
-
-   Stress (σ) = Force (F) / Cross-sectional area (A)
-
-4. Strain: The strain is a measure of the deformation experienced by the specimen and is calculated by dividing the change in length by the original length. Strain is a dimensionless quantity, but it is often expressed as a percentage.
-
-   Strain (ε) = Change in length (ΔL) / Original length (L)
-
-By using these quantities, several standard curves can be generated to understand material's behavior under monotonic tensile tests; 
-
-1. Load vs. displacement curve: This curve plots the applied load against the displacement of the grips, indicating the elongation of the specimen. It provides a visual representation of the mechanical behavior of the material under tension.
-
-2. Stress vs. strain curve: This curve represents the relationship between the applied stress and the resulting strain. It is one of the most important outputs of a tensile test as it reveals crucial material properties.
-
-Drawing curves from tensile test data involves plotting stress on the y-axis and strain on the x-axis. The resulting stress-strain curve typically exhibits distinct regions:
-
-1. Elastic region: Initially, the stress-strain curve is linear, indicating that the material behaves elastically, meaning it returns to its original shape when the load is removed. The slope of this linear portion is known as the elastic modulus or Young's modulus, and it represents the material's stiffness.
-
-2. Yield point: Beyond the elastic region, the stress-strain curve exhibits a yield point where the material starts to deform plastically, experiencing permanent deformation without an increase in stress. The yield point is an important parameter in determining the material's strength and ductility.
-
-3. Plastic deformation: After the yield point, the stress-strain curve becomes nonlinear, indicating significant plastic deformation. The material undergoes necking, reducing its cross-sectional area and increasing strain until it reaches the ultimate tensile strength (UTS). The UTS represents the maximum stress the material can withstand before failure.
-
-4. Fracture: The stress-strain curve ends with the fracture point, where the material ruptures. The fracture point indicates the material's failure strength.
-
-Tensile testing has a variety of uses, including:
-
-* Selecting materials for an application
-* Predicting how a material will perform under different forces
-* Determining whether the requirements of a specification, contract or standard are met
-* Demonstrating proof of concept for a new product
-* Proving characteristics for a proposed patent
-* Providing standard quality assurance data for scientific and engineering functions
-* Comparing technical data for different material options
-* Material testing to provide evidence for use in legal proceedings
-
-## Machines available for this course
-
-For this course, a custom made tensile testing machines will be available. These machines are equipped with
-
-* Custom made grips to hold sample
-* A voltage regulator to control the piston
-* A piston to provide displacement on the sample based on the given voltage
-* A load cell to measure the response while the displacement is applied
-* A mitigation controller (based on arduino) to control tensile testing machine with a serial interface
-
-To control the machine and get the responses from the load cell, dedicated graphical user interface is created which is located under 'control_machine' folder. The controlling program is written under Python language to facilitate it's usage and easy modifications.
-
-However, controlling of the piston movement is performed using a voltage regulator and **displacement values are not recorded**. For this purpose, a video recorder is required to survey the entire test. **For instance, you can use your phones to record the entire survey.** To get displacement values or calculating the strain values, you will require another script which is located under 'point_tracking' folder. This program is also written under Python programming language to facilitate it's usage.
+Using this environment means accepting the licenses of these components.
